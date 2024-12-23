@@ -30,13 +30,13 @@
 
                         <div class="tab-pane fade show active" id="generalesVehiculo" role="tabpanel" aria-labelledby="generales">
 
-                            <?= $this->include('modulesVehiculos/datosGenerales') ?>
+                            <?= $this->include('julio101290\boilerplatevehicles\Views\modulesVehiculos/datosGenerales') ?>
 
                         </div>
 
                         <div class="tab-pane fade" id="cartaPorte" role="tabpanel" aria-labelledby="datosFacturacion">
 
-                            <?= $this->include('modulesVehiculos/datosCartaPorte') ?>
+                            <?= $this->include('julio101290\boilerplatevehicles\Views\modulesVehiculos/datosCartaPorte') ?>
 
                         </div>
 
