@@ -44,7 +44,7 @@ class BoilerplateVehicles extends Seeder {
 
         // Assign Permission to user
         $this->authorize->addPermissionToUser('vehiculos-permission', 1);
-        $this->authorize->addPermissionToUser('tipovehiculo-permissionn', 1);
+        $this->authorize->addPermissionToUser('tipovehiculo-permission', 1);
 
     }
 
