@@ -8,7 +8,7 @@ use \julio101290\boilerplatevehicles\Models\{
 };
 use julio101290\boilerplatelog\Models\LogModel;
 use CodeIgniter\API\ResponseTrait;
-use julio101290\boilerplatevehicles\Models\EmpresasModel;
+use julio101290\boilerplatecompanies\Models\EmpresasModel;
 use julio101290\boilerplatevehicles\Models\TipovehiculoModel;
 
 class VehiculosController extends BaseController {
