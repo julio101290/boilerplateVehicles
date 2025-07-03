@@ -190,8 +190,10 @@ class VehiculosController extends BaseController {
         if (!isset($postData['searchTerm'])) {
             // Fetch record
 
-            $listCustumers = $custumers->select('id,descripcion,placas')->where("deleted_at", null)
-                    ->where('idEmpresa', $idEmpresa)
+            $listCustumers = $custumers
+                    ->select('id, descripcion, placas')
+                    ->where('"deleted_at" IS NULL', null, false)
+                    ->where('"idEmpresa"', $idEmpresa)
                     ->orderBy('id')
                     ->orderBy('descripcion')
                     ->orderBy('placas')
@@ -201,12 +203,17 @@ class VehiculosController extends BaseController {
 
             // Fetch record
 
-            $listCustumers = $custumers->select('id,descripcion,placas')->where("deleted_at", null)
-                    ->where('idEmpresa', $idEmpresa)
+            $db = \Config\Database::connect();
+            $searchTerm = strtolower($db->escapeLikeString($searchTerm));
+
+            $listCustumers = $custumers
+                    ->select('id, descripcion, placas')
+                    ->where('deleted_at IS NULL', null, false)
+                    ->where('"idEmpresa"', $idEmpresa) // o sin comillas si es idempresa
                     ->groupStart()
-                    ->like('descripcion', $searchTerm)
-                    ->orLike('id', $searchTerm)
-                    ->orLike('placas', $searchTerm)
+                    ->where('LOWER(descripcion) LIKE', "%{$searchTerm}%")
+                    ->orWhere('CAST(id AS TEXT) LIKE', "%{$searchTerm}%")
+                    ->orWhere('LOWER(placas) LIKE', "%{$searchTerm}%")
                     ->groupEnd()
                     ->findAll(1000);
         }
