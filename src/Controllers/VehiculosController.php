@@ -179,8 +179,13 @@ class VehiculosController extends BaseController {
 
         $request = service('request');
         $postData = $request->getPost();
+        
+        $db = \Config\Database::connect(); // Obtener la conexión por defecto
+        $driver = $db->DBDriver;
 
         $response = array();
+
+        $quote = $driver === 'Postgre' ? '"' : '';
 
         // Read new token and assign in $response['token']
         $response['token'] = csrf_hash();
@@ -192,8 +197,8 @@ class VehiculosController extends BaseController {
 
             $listCustumers = $custumers
                     ->select('id, descripcion, placas')
-                    ->where('"deleted_at" IS NULL', null, false)
-                    ->where('"idEmpresa"', $idEmpresa)
+                    ->where($quote . 'deleted_at' . $quote . ' IS NULL', null, false)
+                    ->where($quote . 'idEmpresa' . $quote, $idEmpresa)
                     ->orderBy('id')
                     ->orderBy('descripcion')
                     ->orderBy('placas')
@@ -208,8 +213,8 @@ class VehiculosController extends BaseController {
 
             $listCustumers = $custumers
                     ->select('id, descripcion, placas')
-                    ->where('deleted_at IS NULL', null, false)
-                    ->where('"idEmpresa"', $idEmpresa) // o sin comillas si es idempresa
+                    ->where($quote . 'deleted_at' . $quote . ' IS NULL', null, false)
+                    ->where($quote . 'idEmpresa' . $quote, $idEmpresa)
                     ->groupStart()
                     ->where('LOWER(descripcion) LIKE', "%{$searchTerm}%")
                     ->orWhere('CAST(id AS TEXT) LIKE', "%{$searchTerm}%")
